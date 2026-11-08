@@ -32,3 +32,24 @@ The public EC2 instance also acts as a **bastion host**, providing a secure entr
 - **Route Tables:** Control network traffic by directing packets to the appropriate gateways or destinations.
 - **Security Groups:** Act as virtual firewalls to control inbound and outbound traffic for EC2 instances.
 - **Bastion Host:** Provides a controlled SSH entry point to the private EC2 instance.
+
+## Implementation
+
+### 1. VPC and Subnet Configuration
+
+Created a custom Virtual Private Cloud (VPC) to establish an isolated network environment within AWS.
+
+The VPC was divided into two subnets to separate public-facing resources from private infrastructure:
+
+- **Public Subnet:** Hosts the public EC2 instance and NAT Gateway, with internet-bound traffic routed through the Internet Gateway.
+- **Private Subnet:** Hosts the private EC2 instance without a public IP address, preventing direct access from the internet.
+
+This separation allows public resources to communicate with the internet while keeping private infrastructure isolated from direct external access.
+
+#### VPC Configuration
+
+![VPC Configuration](screenshots/vpc.png)
+
+#### Subnet Configuration
+
+![Public and Private Subnets](screenshots/subnets.png)
