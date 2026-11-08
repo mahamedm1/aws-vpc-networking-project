@@ -53,3 +53,20 @@ This separation allows public resources to communicate with the internet while k
 #### Subnet Configuration
 
 ![Public and Private Subnets](screenshots/subnets.png)
+
+
+### 2. Internet Gateway Configuration
+
+Created an **Internet Gateway (IGW)** and attached it to the custom VPC to enable communication between public resources and the internet.
+
+The Internet Gateway provides a path for inbound and outbound internet traffic, provided the resources have appropriate routing, public IP addresses, and security group rules.
+
+- Created an Internet Gateway and attached it to the VPC.
+- Configured the public subnet's route table with a default route (`0.0.0.0/0`) pointing to the Internet Gateway.
+- Enabled internet connectivity for the public EC2 instance through its public IPv4 address.
+
+This configuration allows the public EC2 instance to communicate with the internet while the private EC2 instance remains inaccessible directly from the internet.
+
+#### Internet Gateway Configuration
+
+![Internet Gateway](screenshots/internet-gateway.png)
