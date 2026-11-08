@@ -142,7 +142,7 @@ This deployment demonstrates how public and private infrastructure can coexist w
 
 #### EC2 Instance Configuration
 
-![EC2 Instances](screenshots/ec2-instances.png)
+![EC2 Instances](screenshots/instances.png)
 
 ---
 
@@ -188,4 +188,89 @@ This approach allows administrators to manage private infrastructure without exp
 ![Bastion Host SSH Connection](screenshots/bastion-host.png)
 
 ---
+
+## Challenges and Troubleshooting
+
+During the implementation, I encountered several networking and connectivity issues that required troubleshooting.
+
+### 1. Internet Gateway Attachment
+
+**Issue:**
+Initially encountered routing configuration errors because the Internet Gateway was not correctly attached to the VPC.
+
+**Solution:**
+Attached the Internet Gateway to the custom VPC and configured the public route table to direct internet-bound traffic through it.
+
+**Learning:**
+Understood the importance of correctly associating gateways and route tables to establish internet connectivity.
+
+### 2. NAT Gateway Configuration
+
+**Issue:**
+Encountered difficulties configuring outbound internet connectivity for resources in the private subnet.
+
+**Solution:**
+Configured the NAT Gateway within the public subnet, associated an Elastic IP, and ensured that the private route table directed internet-bound traffic towards the NAT Gateway.
+
+**Learning:**
+Developed a clearer understanding of how NAT Gateways enable outbound internet access for private instances without requiring public IP addresses.
+
+### 3. SSH Key Permissions
+
+**Issue:**
+Encountered an SSH authentication error because the private key file had overly permissive file permissions.
+
+**Solution:**
+Restricted access to the private key file using the following command:
+
+    chmod 400 key.pem
+
+**Learning:**
+Understood how SSH enforces private key permissions to prevent unauthorised access to authentication credentials.
+
+---
+
+## Key Learnings
+
+Through this project, I gained practical experience in:
+
+- **AWS VPC Networking:** Designing and configuring a custom virtual network within AWS.
+- **Subnetting:** Separating public-facing and private resources using subnet CIDR ranges.
+- **Internet Gateway:** Enabling internet connectivity for resources within public subnets.
+- **NAT Gateway:** Providing outbound internet connectivity for private EC2 instances.
+- **Route Tables:** Understanding how routing decisions determine network traffic paths.
+- **Security Groups:** Implementing stateful firewall rules to restrict network access.
+- **Amazon EC2:** Deploying and configuring virtual servers within different subnets.
+- **Bastion Hosts:** Understanding how jump hosts provide controlled administrative access to private infrastructure.
+- **SSH:** Managing key-based authentication and troubleshooting connectivity issues.
+- **AWS Troubleshooting:** Identifying and resolving issues involving networking, routing, and instance connectivity.
+
+---
+
+## Future Improvements
+
+Although the infrastructure was provisioned manually through the AWS Management Console, several improvements could be introduced to make the environment more automated, scalable, and resilient.
+
+### Infrastructure as Code (Terraform)
+
+Recreate the infrastructure using Terraform to automate the provisioning of VPCs, subnets, gateways, route tables, security groups, and EC2 instances.
+
+### High Availability
+
+Deploy resources across multiple Availability Zones to reduce dependency on a single Availability Zone and improve fault tolerance.
+
+
+### CI/CD Integration
+
+Implement a CI/CD pipeline using GitHub Actions to automate Terraform validation, planning, and infrastructure deployment.
+
+---
+
+## Conclusion
+
+This project provided hands-on experience in designing and configuring a secure AWS networking environment from scratch.
+
+By implementing public and private subnets, configuring internet connectivity through Internet and NAT Gateways, managing routing and security groups, and using a bastion host for SSH access, I developed a stronger understanding of how AWS networking components work together.
+
+The project also strengthened my troubleshooting skills and established a foundation for future infrastructure automation projects using Terraform.
 
