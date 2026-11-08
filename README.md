@@ -93,3 +93,99 @@ This configuration allows the private EC2 instance to access external services, 
 #### NAT Gateway Configuration
 
 ![NAT Gateway](screenshots/NAT-gateway.png)
+
+### 4. Route Table Configuration
+
+Configured separate route tables for the public and private subnets to control how network traffic is directed within the VPC and towards the internet.
+
+#### Public Route Table
+
+- Created a public route table and associated it with the public subnet.
+- Configured the default route (`0.0.0.0/0`) to direct internet-bound traffic through the Internet Gateway.
+- Retained the local route to allow communication between resources within the VPC.
+
+#### Private Route Table
+
+- Created a private route table and associated it with the private subnet.
+- Configured the default route (`0.0.0.0/0`) to direct outbound internet traffic through the NAT Gateway.
+- Retained the local route to allow communication between resources within the VPC.
+
+This configuration allows the public EC2 instance to communicate directly with the internet, while the private EC2 instance uses the NAT Gateway for outbound internet connectivity.
+
+#### Route Table Configuration
+
+![Route Tables](screenshots/route-tables.png)
+
+---
+
+### 5. EC2 Instance Deployment
+
+Deployed two Amazon EC2 instances within the custom VPC, placing one in the public subnet and the other in the private subnet.
+
+The objective was to demonstrate how EC2 instances can operate in different network environments with distinct accessibility and security requirements.
+
+#### Public EC2 Instance
+
+- Launched an EC2 instance within the public subnet.
+- Assigned a public IPv4 address to enable external connectivity.
+- Configured the instance's security group to restrict inbound access.
+- Used the instance as a bastion host to establish SSH connections to the private EC2 instance.
+
+#### Private EC2 Instance
+
+- Launched a second EC2 instance within the private subnet.
+- Configured the instance without a public IPv4 address.
+- Restricted inbound connectivity using security group rules.
+- Used the public EC2 instance as a bastion host to access the private instance through SSH.
+
+This deployment demonstrates how public and private infrastructure can coexist within the same VPC while maintaining different levels of network accessibility.
+
+#### EC2 Instance Configuration
+
+![EC2 Instances](screenshots/ec2-instances.png)
+
+---
+
+### 6. Security Group Configuration
+
+Configured AWS Security Groups to control inbound and outbound traffic for both EC2 instances.
+
+Security Groups act as stateful virtual firewalls, allowing administrators to define which network connections are permitted.
+
+#### Public EC2 Security Group
+
+- Configured inbound SSH access (port 22) from a trusted IP address.
+- Restricted unnecessary inbound connections.
+- Allowed outbound traffic required for connectivity.
+
+#### Private EC2 Security Group
+
+- Configured inbound SSH access (port 22) from the public EC2 instance's security group.
+- Prevented direct SSH access from the internet.
+- Allowed outbound traffic required for communication through the NAT Gateway.
+
+These security configurations demonstrate the principle of least privilege by limiting access to only the connections required for the infrastructure to function.
+
+---
+
+### 7. Bastion Host and SSH Connectivity
+
+Implemented a **bastion host** to provide secure administrative access to the private EC2 instance without assigning it a public IP address.
+
+The public EC2 instance serves as an entry point into the private network, allowing SSH connections to be established securely.
+
+#### SSH Connection Process
+
+1. Established an SSH connection from my local machine to the public EC2 instance using its public IPv4 address.
+2. Used the public EC2 instance as a jump host to reach the private EC2 instance.
+3. Connected to the private EC2 instance using its private IPv4 address.
+4. Used SSH authentication and security group rules to control access between the instances.
+
+This approach allows administrators to manage private infrastructure without exposing private EC2 instances directly to the internet.
+
+#### Bastion Host Connectivity
+
+![Bastion Host SSH Connection](screenshots/bastion-host.png)
+
+---
+
