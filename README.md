@@ -70,3 +70,26 @@ This configuration allows the public EC2 instance to communicate with the intern
 #### Internet Gateway Configuration
 
 ![Internet Gateway](screenshots/internet-gateway.png)
+
+
+### 3. NAT Gateway and Elastic IP Configuration
+
+Created a **NAT Gateway** in the public subnet to allow the private EC2 instance to initiate outbound internet connections without requiring a public IP address.
+
+An **Elastic IP (EIP)** was allocated and associated with the NAT Gateway to provide a static public IPv4 address for outbound internet traffic.
+
+- Allocated an Elastic IP address.
+- Created a public NAT Gateway within the public subnet.
+- Associated the Elastic IP with the NAT Gateway.
+- Configured the private subnet's route table with a default route (`0.0.0.0/0`) pointing to the NAT Gateway.
+- Enabled outbound internet connectivity for the private EC2 instance without exposing it to unsolicited inbound internet connections.
+
+This configuration allows the private EC2 instance to access external services, such as software repositories for package updates, while remaining inaccessible directly from the internet.
+
+#### Elastic IP Configuration
+
+![Elastic IP](screenshots/elastic-ip.png)
+
+#### NAT Gateway Configuration
+
+![NAT Gateway](screenshots/NAT-gateway.png)
