@@ -20,7 +20,7 @@ The public EC2 instance also acts as a **bastion host**, providing a secure entr
 
 ### Architecture Diagram
 
-![AWS VPC Architecture](screenshots/architecture-diagram.png)
+![AWS VPC Architecture](screenshots/architecture.png)
 
 ### Network Components
 
