@@ -1,8 +1,6 @@
-# AWS VPC & EC2 Networking Project
+# Secure AWS Network Infrastructure
 
-## Project Overview
-
-This project demonstrates the design and configuration of a custom AWS Virtual Private Cloud (VPC) environment, incorporating public and private subnets, EC2 instances, and secure network routing.
+Design and implementation of a custom AWS VPC architecture featuring public and private subnets, Internet Gateway, NAT Gateway, route tables, security groups, and secure SSH access to private EC2 instances through a bastion host.
 
 The objective was to gain hands-on experience with AWS networking fundamentals by building a network infrastructure from scratch, configuring internet connectivity, controlling network access, and understanding how AWS resources communicate within a VPC.
 
